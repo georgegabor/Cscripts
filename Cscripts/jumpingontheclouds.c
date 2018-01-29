@@ -6,31 +6,40 @@
 #include <limits.h>
 #include <stdbool.h>
 
-int jumpingOnClouds(int c_size, int* c, int k) 
+int jumpingOnClouds(int c_size, int* c) 
 {
-    int e=100;
-    for (int i = 0; i < c_size; i+=k)
+    int count=0;
+    int i=0;
+    while(i<c_size-1)
     {
-        (c[i]==0)?(e-=1):(e-=3);
-
+        if(c[i+2]==0)
+        {
+            count++;
+            i+=2;
+            printf("If: count=%d i=%d\n",count,i );
+        }
+        else
+           {
+            count++;
+            i++;
+            printf("Else: count=%d i=%d\n",count,i );
+           } 
     }
-    return e;
+    printf("count at the end=%d\n",count );
+    return count;
 }
 
 int main() {
     int n; 
-    int k; 
-    scanf("%i %i", &n, &k);
-    assert(n>=2 && n<=25);
-    assert(k>=1 && k<=n);
-    assert(n%k==0);
+    scanf("%i", &n);
+    assert(n>=2 && n<=100);
     int *c = malloc(sizeof(int) * n);
     for (int c_i = 0; c_i < n; c_i++) {
        scanf("%i",&c[c_i]);
-       assert(c[c_i]==0 || c[c_i]==1);
+        assert(c[c_i]>=0 && c[c_i]<=1);
+        assert(c[0]==0 && c[n-1]==0);
     }
-    int result = jumpingOnClouds(n, c, k);
+    int result = jumpingOnClouds(n, c);
     printf("%d\n", result);
-    free(c);
     return 0;
 }
